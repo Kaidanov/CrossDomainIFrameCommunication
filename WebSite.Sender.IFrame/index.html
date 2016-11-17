@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+</head>
+<body>
+    <style>
+        body {
+            font-family: sans-serif; 
+            padding: 10px;    
+        }
+        h1 {
+            font-weight: bold;   
+        }
+        iframe {
+            width: 100%;
+        }
+        label {
+            font-size: small;
+        }
+        #controls {
+            border-top: 1px solid #000;
+            border-bottom: 1px solid #000;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            padding: 10px 0;   
+        }
+        p {
+            margin-top: 8px;
+            font-size: small;   
+        }
+        h3 {
+            padding-bottom: 5px;
+        }
+    </style>
+    <h1>Cross-Domain Messaging Example</h1>
+    <div id="controls">
+        <label>Enter your message to be sent to the iframe: </label>
+        <input type="text" id="message" />
+        <button id="sendmessage" onclick="sendMessage();">Send Message</button>
+        <p>(Note: Only alphanumeric characters will be printed!)</p>
+    </div>
+    <h3>Remote Script iframe</h3>
+    <iframe id="remotepage" src="http://localhost:55582/"></iframe>
+    <script>
+        function sendMessage() {
+            //select the iframe containing the message receiver remote script
+            var remoteframe = document.getElementById("remotepage");
+
+            //Get the users message from the message input box
+            var message = document.getElementById("message").value;
+
+            //Check that the message is not blank
+            if (message !== "") {
+                remoteframe.contentWindow.postMessage(message, 'http://localhost:55582');
+            }
+            else {
+                alert("You cannot send a blank message!");
+            }
+        }
+
+    </script>
+</body>
+</html>
+
+
